@@ -1,7 +1,6 @@
 package com.bridgelabz.addressbook.model;
 
 import com.bridgelabz.addressbook.dto.AddressBookDTO;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,40 +8,31 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-@Entity
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+@Entity
 public class AddressBook {
     @Id
     @GeneratedValue
     private int id;
     private String firstName;
     private String lastName;
-    private String phoneNo;
+    private String address;
     private String city;
     private String state;
     private String zipCode;
-    private String address;
+    private String phoneNo;
 
     public AddressBook(AddressBookDTO addressBookDTO){
-        this.firstName=addressBookDTO.firstName;
-        this.lastName=addressBookDTO.lastName;
-        this.phoneNo=addressBookDTO.phoneNo;
-        this.city=addressBookDTO.city;
-        this.state=addressBookDTO.state;
-        this.zipCode=addressBookDTO.zipCode;
-        this.address=addressBookDTO.address;
+        this.updateData(addressBookDTO);
     }
-    public AddressBook(int id,AddressBookDTO addressBookDTO)
-    {
-        this.id=id;
+    public void updateData(AddressBookDTO addressBookDTO){
         this.firstName=addressBookDTO.firstName;
         this.lastName=addressBookDTO.lastName;
-        this.phoneNo=addressBookDTO.phoneNo;
+        this.address=addressBookDTO.address;
         this.city=addressBookDTO.city;
         this.state=addressBookDTO.state;
         this.zipCode=addressBookDTO.zipCode;
-        this.address=addressBookDTO.address;
+        this.phoneNo=addressBookDTO.phoneNo;
     }
 }

@@ -40,5 +40,4 @@ public @ToString class AddressBookDTO {
     @NotNull(message = "Address Cannot Be Empty")
     @Pattern(regexp = "^((.){1,}(\\d){1,}(.){0,})$",message = "Address Is Invalid")
     public String address;
-
 }

@@ -6,17 +6,21 @@ import com.bridgelabz.addressbook.model.AddressBook;
 import java.util.List;
 
 public interface iAddressBookService {
-    List<AddressBook> getAddressBookData();
+    List<AddressBook> getAddressBook();
 
-    AddressBook  getAddressBookDataById(int empId);
+    AddressBook addAddressBook(AddressBookDTO addressBookDTO);
 
-    AddressBook createAddressBookData(AddressBookDTO AddressBookDTO);
+    AddressBook getAddressBookById(int id);
 
-    AddressBook updateAddressBookData(int empId, AddressBookDTO AddressBookDTO);
+    AddressBook editAddressBook(int id, AddressBookDTO addressBookDTO);
 
-    String deleteAddressBookData(int empID);
+    void deleteAddressBook(int id);
 
-    AddressBook findByCity(String city);
+    List<AddressBook> getAddressBookByCity(String city);
 
-    AddressBook findByState(String city);
+    List<AddressBook> getAddressBookByState(String state);
+
+    List<AddressBook> sortAddressBookByCity();
+
+    List<AddressBook> sortAddressBookByState();
 }

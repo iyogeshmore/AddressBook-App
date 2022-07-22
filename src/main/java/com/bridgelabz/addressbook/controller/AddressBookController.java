@@ -11,63 +11,67 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
-@Slf4j
 @RestController
+@Slf4j
+@RequestMapping("/addressBook")
 public class AddressBookController {
-
     @Autowired
-    iAddressBookService iAddressBookService;
+iAddressBookService addressBookService;
 
-    List<AddressBook> addressDatalist = new ArrayList<>();
-
-    @RequestMapping(value = {"","/", "/get"})
-    public ResponseEntity<ResponseDTO> getAddressBookData() {
-        addressDatalist = iAddressBookService.getAddressBookData();
-        ResponseDTO responseDTO = new ResponseDTO("Get Call Successful", addressDatalist);
+    @GetMapping(value = {"", "/", "/get"})
+    public ResponseEntity<ResponseDTO> getAddressBookData(){
+        List<AddressBook> addressBookList = addressBookService.getAddressBook();
+        ResponseDTO responseDTO = new ResponseDTO("Get call successful", addressBookList);
         return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
     }
-    @GetMapping("/get/{empId}")
-    public ResponseEntity<ResponseDTO> getAddressBookData(@PathVariable("empId") int empID) {
-        AddressBook addressBookData = iAddressBookService.getAddressBookDataById(empID);
-        ResponseDTO responseDTO= new ResponseDTO("Get Call For ID Successful", addressBookData);
-        return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
-    }
-
     @PostMapping("/add")
-    public ResponseEntity<ResponseDTO> createAddressBookData(
-            @Valid @RequestBody AddressBookDTO addressBookDTO) {
-        AddressBook addressBookData = iAddressBookService.createAddressBookData(addressBookDTO);
-        ResponseDTO responseDTO= new ResponseDTO("Created AddressBook  Data Successfully", addressBookData);
+    public ResponseEntity<ResponseDTO> createAddressBook(@Valid @RequestBody AddressBookDTO addressBookDTO){
+        AddressBook addressBook = addressBookService.addAddressBook(addressBookDTO);
+        ResponseDTO responseDTO = new ResponseDTO("Created Address Book data successfully", addressBook);
         return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
     }
-
     @PutMapping("/update/{id}")
-    public ResponseEntity<ResponseDTO> updateAddressBookData(@PathVariable int id,@Valid @RequestBody AddressBookDTO addressBookDTO) {
-        ResponseDTO responseDTO= new ResponseDTO("Updated AddressBook Details Successfully", iAddressBookService.updateAddressBookData(id,addressBookDTO));
+    public ResponseEntity<ResponseDTO> editAddressBook(@PathVariable int id, @Valid @RequestBody AddressBookDTO addressBookDTO){
+        AddressBook addressBook = addressBookService.editAddressBook(id, addressBookDTO);
+        ResponseDTO responseDTO = new ResponseDTO("Updated Address Book data successfully", addressBook);
         return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
     }
-
-    @DeleteMapping("/delete/{Id}")
-    public ResponseEntity <ResponseDTO> deleteAddressBookData(@PathVariable("Id") int Id) {
-        iAddressBookService.deleteAddressBookData(Id);
-        ResponseDTO responseDTO= new ResponseDTO("Deleted Successfully", "Deleted id: "+Id);
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<ResponseDTO> deleteAddressBook(@PathVariable int id){
+        addressBookService.deleteAddressBook(id);
+        ResponseDTO responseDTO = new ResponseDTO("Deleted Successfully", "Deleted for id: "+id);
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+    }
+    @GetMapping("/getById/{id}")
+    public ResponseEntity<ResponseDTO> getAddressBookById(@PathVariable int id){
+        AddressBook addressBook = addressBookService.getAddressBookById(id);
+        ResponseDTO responseDTO = new ResponseDTO("Get call for id successful", addressBook);
         return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
     }
-
-    @GetMapping("/city/{city}")
-    public ResponseEntity<ResponseDTO> getCityAddressBookData(@PathVariable("city") String city) {
-        AddressBook addressBookDataList = iAddressBookService.findByCity (city);
-        ResponseDTO responseDTO= new ResponseDTO("Get Call For ID Successful", addressBookDataList);
+        @GetMapping("/getByCity/{city}")
+    public ResponseEntity<ResponseDTO> getAddressBookByCity(@PathVariable String city){
+        List<AddressBook> addressBook = addressBookService.getAddressBookByCity(city);
+        ResponseDTO responseDTO = new ResponseDTO("Get call for city successful", addressBook);
         return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
     }
-
-    @GetMapping("/state/{state}")
-    public ResponseEntity<ResponseDTO> getStateAddressBookData(@PathVariable("state") String state) {
-        AddressBook addressBookDataList = iAddressBookService.findByState(state);
-        ResponseDTO responseDTO= new ResponseDTO("Get Call For ID Successful", addressBookDataList);
+    @GetMapping("/getByState/{state}")
+    public ResponseEntity<ResponseDTO> getAddressBookByState(@PathVariable String state){
+        List<AddressBook> addressBook = addressBookService.getAddressBookByState(state);
+        ResponseDTO responseDTO = new ResponseDTO("Get call for state successful", addressBook);
+        return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
+    }
+    @GetMapping("/sortByCity")
+    public ResponseEntity<ResponseDTO> sortAddressBookByCity(){
+        List<AddressBook> addressBook = addressBookService.sortAddressBookByCity();
+        ResponseDTO responseDTO = new ResponseDTO("Get call for sorted data by city successful", addressBook);
+        return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
+    }
+    @GetMapping("/sortByState")
+    public ResponseEntity<ResponseDTO> sortAddressBookByState(){
+        List<AddressBook> addressBook = addressBookService.sortAddressBookByState();
+        ResponseDTO responseDTO = new ResponseDTO("Get call for sorted data by state successful", addressBook);
         return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
     }
 

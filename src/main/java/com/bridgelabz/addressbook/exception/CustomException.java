@@ -19,14 +19,15 @@ public class CustomException {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ResponseDTO> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception){
         List<ObjectError> errorList = exception.getBindingResult().getAllErrors();
-        List<String> errmsg = errorList.stream()
+        List<String> errorMessage = errorList.stream()
                 .map(objErr -> objErr.getDefaultMessage())
                 .collect(Collectors.toList());
-        ResponseDTO respDTO = new ResponseDTO("Exception while processing rest request",errmsg);
+        ResponseDTO respDTO = new ResponseDTO("Exception while processing rest request",errorMessage);
         return new ResponseEntity<>(respDTO, HttpStatus.BAD_REQUEST);
     }
+
     @ExceptionHandler(AddressBookException.class)
-    public ResponseEntity<ResponseDTO> handleEmployeePayrollException(AddressBookException exception){
+    public ResponseEntity<ResponseDTO> handleAddressBookException(AddressBookException exception){
         ResponseDTO respDTO = new ResponseDTO("Exception while processing REST request",
                 exception.getMessage());
         return new ResponseEntity<>(respDTO, HttpStatus.BAD_REQUEST);
