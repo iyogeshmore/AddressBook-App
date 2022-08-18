@@ -16,56 +16,70 @@ public class AddressBookService implements iAddressBookService {
     @Autowired
     private AddressBookRepository repository;
 
-    public void isEmpty(List<AddressBook> addressBookList){
-        if(addressBookList.isEmpty())
+    public void isEmpty(List<AddressBook> addressBookList) {
+        if (addressBookList.isEmpty())
             throw new AddressBookException("Address Book is empty!");
     }
+    //--------------------------------- Get All By Contact ---------------------------------
     @Override
     public List<AddressBook> getAddressBook() {
         List<AddressBook> addressBookList = repository.findAll();
         isEmpty(addressBookList);
         return addressBookList;
     }
+
+    //--------------------------------- Add New Contact ---------------------------------
     @Override
     public AddressBook addAddressBook(AddressBookDTO addressBookDTO) {
         AddressBook addressBook = new AddressBook(addressBookDTO);
-        log.debug("Address Book data: "+addressBook.toString());
+        log.debug("Address Book data: " + addressBook.toString());
         return repository.save(addressBook);
     }
+
+    //--------------------------------- Get Contact By Id ---------------------------------
     @Override
     public AddressBook getAddressBookById(int id) {
         return repository.findById(id)
-                .orElseThrow(() -> new AddressBookException("Address Book with id "+id+" not found!"));
+                .orElseThrow(() -> new AddressBookException("Address Book with id " + id + " not found!"));
     }
+
+    //--------------------------------- Update Contact ---------------------------------
     @Override
     public AddressBook editAddressBook(int id, AddressBookDTO addressBookDTO) {
         AddressBook addressBook = this.getAddressBookById(id);
         addressBook.updateData(addressBookDTO);
-        log.debug("Address Book data: "+addressBook.toString());
+        log.debug("Address Book data: " + addressBook.toString());
         return repository.save(addressBook);
     }
+
+    //--------------------------------- Delete Contact ---------------------------------
     @Override
     public void deleteAddressBook(int id) {
         AddressBook addressBook = this.getAddressBookById(id);
         repository.delete(addressBook);
     }
+
+    //--------------------------------- Get Contact By City ---------------------------------
     @Override
     public List<AddressBook> getAddressBookByCity(String city) {
         List<AddressBook> addressBookList = repository.findByCity(city);
-        if(addressBookList.isEmpty()) {
-            throw new AddressBookException("Address Book with city "+city+" not found!");
+        if (addressBookList.isEmpty()) {
+            throw new AddressBookException("Address Book with city " + city + " not found!");
         }
         return addressBookList;
     }
 
+    //--------------------------------- Get Contact By State ---------------------------------
     @Override
     public List<AddressBook> getAddressBookByState(String state) {
         List<AddressBook> addressBookList = repository.findByState(state);
-        if(addressBookList.isEmpty()) {
-            throw new AddressBookException("Address Book with state "+state+" not found!");
+        if (addressBookList.isEmpty()) {
+            throw new AddressBookException("Address Book with state " + state + " not found!");
         }
         return addressBookList;
     }
+
+    //--------------------------------- Sort Contact By City ---------------------------------
     @Override
     public List<AddressBook> sortAddressBookByCity() {
         List<AddressBook> addressBookList = repository.findAllByOrderByCity();
@@ -73,6 +87,7 @@ public class AddressBookService implements iAddressBookService {
         return addressBookList;
     }
 
+    //--------------------------------- Sort Contact By State ---------------------------------
     @Override
     public List<AddressBook> sortAddressBookByState() {
         List<AddressBook> addressBookList = repository.findAllByOrderByState();

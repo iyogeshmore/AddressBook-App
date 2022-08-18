@@ -13,14 +13,9 @@ import javax.validation.constraints.Pattern;
 @AllArgsConstructor
 
 public @ToString class AddressBookDTO {
-    @NotNull(message = "First Name cannot be null")
-    @Pattern(regexp = "^[A-Z]{1}[a-zA-Z\\s]{2,}$", message = "First Name Invalid")
-    public String firstName;
-
-    @NotNull(message = "Last Name cannot be null")
-    @Pattern(regexp = "^[A-Z]{1}[a-zA-Z\\s]{2,}$", message = "Last Name Invalid")
-    public String lastName;
-
+    @NotNull(message = "Full Name cannot be null")
+    @Pattern(regexp = "^[A-Z]{1}[a-zA-Z\\s]{2,}$", message = "Full Name Invalid")
+    public String fullName;
     @NotNull(message = "Phone No cannot be null")
     @Pattern(regexp = "^[0-9]{2}\\s{0,1}[0-9]{10}$",message = "Phone No Is Invalid")
     public String phoneNo;

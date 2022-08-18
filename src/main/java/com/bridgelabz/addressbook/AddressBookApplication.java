@@ -15,5 +15,4 @@ public class AddressBookApplication {
         log.info("Address Book Started in {} Environment",
                 context.getEnvironment().getProperty("environment"));
     }
-
 }

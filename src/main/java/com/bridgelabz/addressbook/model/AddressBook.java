@@ -15,8 +15,7 @@ public class AddressBook {
     @Id
     @GeneratedValue
     private int id;
-    private String firstName;
-    private String lastName;
+    private String fullName;
     private String address;
     private String city;
     private String state;
@@ -27,8 +26,7 @@ public class AddressBook {
         this.updateData(addressBookDTO);
     }
     public void updateData(AddressBookDTO addressBookDTO){
-        this.firstName=addressBookDTO.firstName;
-        this.lastName=addressBookDTO.lastName;
+        this.fullName=addressBookDTO.fullName;
         this.address=addressBookDTO.address;
         this.city=addressBookDTO.city;
         this.state=addressBookDTO.state;
